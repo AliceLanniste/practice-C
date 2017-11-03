@@ -14,6 +14,13 @@ NArray* create(int capacity)
 }
 
 
+void Free(NArray *ptr)
+{
+    free(ptr->data);
+    free(ptr);
+}
+
+
 void resize(NArray *ptr,int otherindex)
 {
  if(ptr->size < otherindex)
@@ -24,7 +31,7 @@ void resize(NArray *ptr,int otherindex)
  else if(ptr->size > otherindex) 
  {
     if(ptr->size == ptr->capacity / 4)
-        halfSize(NArray *ptr);
+        halfSize(ptr);
  }
 }
 
@@ -33,9 +40,9 @@ void doubleSize(NArray *ptr)
     int oldCapacity = ptr -> capacity;
     int newCapacity = 2 * oldCapacity;
     int *newdata = (int *) malloc(sizeof(int) * newCapacity);
-    for(int i=0;i<arr->size;i++)
+    for(int i=0;i<ptr->size;i++)
     {
-        *(newdata+i)=*(data+i);
+        *(newdata+i)=*(ptr->data+i);
     }
     free(ptr ->data);
     ptr ->data = newdata;
@@ -58,7 +65,7 @@ void halfSize(NArray *ptr)
     
         for(int i=0;i<ptr->size;i++)
         {
-            *(newdata+i) = *(data+i);
+            *(newdata+i) = *(ptr->data+i);
         }
      
     free(ptr->data);
@@ -72,10 +79,9 @@ int size(NArray *ptr)
     return ptr->size;
 }
 
-
-void push(NArray *ptr，int item)
+void push(NArray *ptr,int item)
 {
-    resize(ptr,arr->size+1);
+    resize(ptr,ptr->size+1);
     *(ptr->data + ptr->size) = item;
     ++(ptr->size);
 }
@@ -126,11 +132,11 @@ void prepend(NArray *ptr,int value)
 
 void delete(NArray *ptr,int index)
 {
-    if(index<0 || index>arr->size-1)
+    if(index<0 || index>ptr->size-1)
         exit(EXIT_FAILURE);
 
-    resize(ptr,arr->size-1);
-    int endindex = arr->size -1;
+    resize(ptr,ptr->size-1);
+    int endindex = ptr->size -1;
     for(int i=0;i<endindex;i++)
     {
         *(ptr->data+i) = *(ptr->data+i+1);
@@ -138,7 +144,7 @@ void delete(NArray *ptr,int index)
     --(ptr->size);
 }
 
-void remove(NArray *ptr,int value)
+void Nremove(NArray *ptr,int value)
 {
     if(ptr->size==0)
     {
@@ -147,7 +153,7 @@ void remove(NArray *ptr,int value)
 
     for(int i=0;i<ptr->size-1;i++)
     {
-        int temp = *(arr->data+i);
+        int temp = *(ptr->data+i);
         if(temp==value)
         {
             delete(ptr,i);
@@ -174,10 +180,10 @@ int find(NArray *ptr,int value)
 
 int at(NArray *ptr,int index)
 {
-    if(index < 0 || index >arr->size)
+    if(index < 0 || index >ptr->size)
     {    exit(EXIT_FAILURE); }
     
-    return *(arr->data+index);   
+    return *(ptr->data+index);   
 }
 
 int providedCapacity(int cap)
@@ -188,7 +194,7 @@ int providedCapacity(int cap)
         exit(EXIT_FAILURE);        
     }
 
-    if(cap > Mincapacity / 2)
+    if(cap > capacity / 2)
     {
         capacity = 2 * capacity;
     }

@@ -22,10 +22,10 @@ extern int size(NArray *);
 extern void push(NArray *,int);
 extern int pop(NArray *);
 extern bool is_empty(NArray *);
-extern void insert(NArray *，int，int);
+extern void insert(NArray *,int,int);
 extern void prepend(NArray *,int);
 extern void delete(NArray *,int);
-extern void remove(NArray *,int value);
+extern void Nremove(NArray *,int value);
 extern int find(NArray *,int);
 extern int providedCapacity(int);
 
