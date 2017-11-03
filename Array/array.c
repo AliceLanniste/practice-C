@@ -1,5 +1,4 @@
-#include <stdlib.h>
-#include <stdbool.h>
+
 
 /*
 *创建一个数组最小容纳为16
@@ -101,6 +100,75 @@ bool is_empty(NArray *ptr)
         empty = 1;
     }
     return empty;
+}
+
+
+void insert(NArray *arr,int index,int value)
+{
+    if(index < 0 || index >arr->size-1)
+        exit(EXIT_FAILURE);
+
+    resize(arr,arr->size+1);
+    int endindex = arr->size -1;
+    for(int i=endindex;i>index;--i)
+    {
+        *(arr->data+i) = *(arr->data+i-1);
+    }
+    *(arr->data+index) = value;
+    ++(arr->size);
+}
+
+
+void prepend(NArray *ptr,int value)
+{
+    insert(ptr,0,value);
+}
+
+void delete(NArray *ptr,int index)
+{
+    if(index<0 || index>arr->size-1)
+        exit(EXIT_FAILURE);
+
+    resize(ptr,arr->size-1);
+    int endindex = arr->size -1;
+    for(int i=0;i<endindex;i++)
+    {
+        *(ptr->data+i) = *(ptr->data+i+1);
+    }
+    --(ptr->size);
+}
+
+void remove(NArray *ptr,int value)
+{
+    if(ptr->size==0)
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    for(int i=0;i<ptr->size-1;i++)
+    {
+        int temp = *(arr->data+i);
+        if(temp==value)
+        {
+            delete(ptr,i);
+        }
+    }
+}
+
+
+int find(NArray *ptr,int value)
+{
+    int k=-1;
+    for(int i=0;i<ptr->size-1;i++)
+    {
+        if(*(ptr->data+i) == value)
+        {
+            k = i;
+            break;
+        }
+    }
+
+    return k;
 }
 
 
