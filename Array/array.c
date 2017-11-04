@@ -92,7 +92,7 @@ int pop(NArray *ptr)
         exit(EXIT_FAILURE);
 
     resize(ptr,ptr->size-1);
-    int popValue = *(ptr->data+ptr->size);
+    int popValue = *(ptr->data+ptr->size-1);
     --(ptr->size);     
     return popValue;
 }
